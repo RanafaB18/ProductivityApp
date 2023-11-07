@@ -11,7 +11,7 @@ const AddTask = () => {
     }
   return (
     <div className="relative">
-    <button onClick={openTaskFormHandler} className="group flex items-center gap-3 p-2 hover:text-red-600 ">
+    <button onClick={openTaskFormHandler} className="group flex items-center w-full gap-3 p-2 hover:text-red-600 ">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

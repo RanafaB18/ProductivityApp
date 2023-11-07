@@ -14,7 +14,7 @@ const TaskForm = ({onCloseForm}) => {
           className="outline-none placeholder:text-xs"
           placeholder="Description"
         />
-        <div className="flex justify-end gap-4 mt-8">
+        <div className="flex justify-end gap-2 mt-8">
           <button type="button" onClick={onCloseForm} className="bg-[#f5f5f5] hover:bg-gray-300  rounded-md p-1">
             <CancelIcon />
           </button>
