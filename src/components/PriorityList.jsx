@@ -28,7 +28,14 @@ const options = [
   { value: "P3", label: "Priority 3", icon: "src/assets/flag3.svg" },
   { value: "P4", label: "Priority 4", icon: "src/assets/flag4.svg" },
 ];
-const PriorityList = () => {
+const PriorityList = ({ setTask }) => {
+  function updatePriority(priority) {
+    setTask((prevData) => ({
+      ...prevData,
+      priority
+    })
+    )
+  }
   const customStyles = {
     control: () => ({
       display: "flex",
@@ -57,6 +64,8 @@ const PriorityList = () => {
   return (
     <Select
       className="w-fit cursor-pointer"
+      name="priority"
+      onChange={(choice) => updatePriority(choice?.value || 'P4' )}
       options={options}
       components={{
         Option: IconOption,
@@ -64,7 +73,6 @@ const PriorityList = () => {
         IndicatorSeparator: () => null,
         DropdownIndicator: () => null,
       }}
-      //   isMulti={true}
       isClearable
       placeholder={
         <div className="flex items-center gap-1">
@@ -72,7 +80,6 @@ const PriorityList = () => {
           <p className="text-sm">Priority</p>
         </div>
       }
-      //   defaultValue={"Priority"}
       isSearchable={false}
       styles={customStyles}
     />
