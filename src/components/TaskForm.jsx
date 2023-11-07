@@ -3,27 +3,41 @@ import PropTypes from "prop-types";
 import SendIcon from "./SendIcon";
 import PriorityList from "./PriorityList";
 import { Tooltip } from "react-tooltip";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { DataContext } from "../context/DataContext";
+import { v4 as uuid } from "uuid"
 const TaskForm = ({ onCloseForm }) => {
+  const { setTasks } = useContext(DataContext)
   const [task, setTask] = useState({
+    id: "",
     taskName: "",
     description: "",
     subtasks: [],
     priority: "P4",
   });
+  const id = uuid()
 
-  function formUpdateHandler() {
+
+  function formUpdateHandler(event) {
     const { name, value } = event.target;
-
     setTask((prevFormData) => ({
       ...prevFormData,
       [name]: value,
+      id
     }));
   }
 
   function submitFormHandler(event) {
     event.preventDefault();
     console.log("Form Data", task);
+    setTasks((prevTasks) => {
+      return [
+        ...prevTasks,
+        task
+      ]
+    })
+    onCloseForm()
+
   }
   return (
     <div className="absolute top-1 bg-white shadow-lg border p-2 px-3 w-full rounded-lg">
@@ -67,10 +81,11 @@ const TaskForm = ({ onCloseForm }) => {
           </button>
           <button
             data-tooltip-offset={2}
-            data-tooltip-content={"Send"}
+            data-tooltip-content={"Add task"}
             data-tooltip-id="send"
             type="submit"
-            className="bg-[#dc4c3e] hover:bg-red-600 rounded-md p-1"
+            disabled={!task.taskName}
+            className={`${!task.taskName && "cursor-no-drop opacity-60"} bg-[#dc4c3e] hover:bg-red-600 rounded-md p-1`}
           >
             <SendIcon />
           </button>
