@@ -6,9 +6,10 @@ import { Tooltip } from "react-tooltip";
 import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import { v4 as uuid } from "uuid"
-const TaskForm = ({ onCloseForm }) => {
+import { motion } from "framer-motion";
+const TaskForm = ({ onCloseForm, todo }) => {
   const { setTasks } = useContext(DataContext)
-  const [task, setTask] = useState({
+  const [task, setTask] = useState(todo ?? {
     id: "",
     taskName: "",
     description: "",
@@ -40,7 +41,7 @@ const TaskForm = ({ onCloseForm }) => {
 
   }
   return (
-    <div className="absolute top-1 bg-white shadow-lg border p-2 px-3 w-full rounded-lg">
+    <motion.div layout className="bg-white shadow-lg border p-2 px-3 w-full rounded-lg">
       <form className="flex flex-col" onSubmit={submitFormHandler}>
         <input
           type="text"
@@ -91,11 +92,12 @@ const TaskForm = ({ onCloseForm }) => {
           </button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 
 TaskForm.propTypes = {
   onCloseForm: PropTypes.func,
+  todo: PropTypes.object,
 };
 export default TaskForm;

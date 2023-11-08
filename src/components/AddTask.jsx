@@ -10,6 +10,7 @@ const AddTask = () => {
         setShowTaskForm(false)
     }
   return (
+    <>
     <motion.div layout className="relative">
     <button onClick={openTaskFormHandler} className="group flex items-center w-full gap-3 py-2 hover:text-red-600 ">
       <svg
@@ -28,8 +29,9 @@ const AddTask = () => {
       </svg>
       <p className="group-hover:opacity-100 opacity-60">Add task</p>
     </button>
-    {showTaskForm && <TaskForm onCloseForm={closeTaskFormHandler}/>}
     </motion.div>
+    {showTaskForm && <TaskForm onCloseForm={closeTaskFormHandler}/>}
+    </>
   );
 };
 

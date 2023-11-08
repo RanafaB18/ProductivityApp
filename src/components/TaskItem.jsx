@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
+import { Tooltip } from "react-tooltip";
 import sound from "../assets/water-droplet.mp3";
+import EditIcon from "./EditIcon";
+import TaskForm from "./TaskForm";
 const TaskItem = ({ task }) => {
   const priorityToColorMapping = {
     P1: "border-red-600 bg-red-500 hover:bg-red-200 text-red-600",
@@ -18,6 +21,7 @@ const TaskItem = ({ task }) => {
   };
   const { setTasks } = useContext(DataContext);
   const { taskName, description, priority, id } = task;
+  const [isEditting, setIsEditting] = useState(false);
   console.log("priority", priority);
   function completeAndRemoveHandler() {
     const audio = new Audio(sound);
@@ -29,45 +33,62 @@ const TaskItem = ({ task }) => {
     }, 150);
   }
 
+  function editHandler() {
+    setIsEditting(true);
+  }
   return (
-    <motion.article layout={{ duration: 0.3 }}
-    exit={{
-      opacity: 0,
-      translateY: -30,
-      transition: { duration: 0.3 },
-    }} className="flex items-start gap-3 py-3 min-h-[80px]">
-      <motion.button
-        whileTap={{
-          scale: 1.3,
-          backgroundColor: priorityToHexMapping[priority],
-        }}
-        onClick={completeAndRemoveHandler}
-        className={`border bg-white ${priorityToColorMapping[priority]} bg-opacity-25 group transition-opacity duration-500 cursor-pointer rounded-full h-fit p-1 mt-0.5`}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className={`w-3 h-3 rotate-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+    <section className="relative">
+      {isEditting ? (
+        <TaskForm todo={task}/>
+      ) : (
+        <motion.article
+          layout
+          className="flex items-start gap-3 py-3 min-h-[80px]"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M4.5 12.75l6 6 9-13.5"
-          />
-        </svg>
-      </motion.button>
-      <div className="flex flex-col gap-1 max-w-sm">
-        <p className="text-sm overflow-hidden whitespace-nowrap text-ellipsis">
-          {taskName}
-        </p>
-        <p className="text-xs opacity-70 overflow-hidden whitespace-nowrap text-ellipsis">
-          {description}
-        </p>
-      </div>
-    </motion.article>
+          <motion.button
+            whileTap={{
+              scale: 1.3,
+              backgroundColor: priorityToHexMapping[priority],
+            }}
+            onClick={completeAndRemoveHandler}
+            className={`border bg-white ${priorityToColorMapping[priority]} bg-opacity-25 group transition-opacity duration-500 cursor-pointer rounded-full h-fit p-1 mt-0.5`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className={`w-3 h-3 rotate-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.5 12.75l6 6 9-13.5"
+              />
+            </svg>
+          </motion.button>
+          <div className="flex flex-col gap-1 max-w-sm">
+            <p className="text-sm overflow-hidden whitespace-nowrap text-ellipsis">
+              {taskName}
+            </p>
+            <p className="text-xs opacity-70 overflow-hidden whitespace-nowrap text-ellipsis">
+              {description}
+            </p>
+          </div>
+          <Tooltip noArrow id="edit-task" className="!p-1 !px-2" />
+          <button
+            onClick={editHandler}
+            data-tooltip-content={"Edit task"}
+            data-tooltip-offset={2}
+            data-tooltip-id="edit-task"
+            className="absolute right-0 opacity-60 cursor-pointer hover:bg-gray-100"
+          >
+            <EditIcon />
+          </button>
+        </motion.article>
+      )}
+    </section>
   );
 };
 
