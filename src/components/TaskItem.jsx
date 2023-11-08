@@ -30,7 +30,12 @@ const TaskItem = ({ task }) => {
   }
 
   return (
-    <article className="flex items-start gap-3 py-3 min-h-[80px]">
+    <motion.article layout={{ duration: 0.3 }}
+    exit={{
+      opacity: 0,
+      translateY: -30,
+      transition: { duration: 0.3 },
+    }} className="flex items-start gap-3 py-3 min-h-[80px]">
       <motion.button
         whileTap={{
           scale: 1.3,
@@ -62,7 +67,7 @@ const TaskItem = ({ task }) => {
           {description}
         </p>
       </div>
-    </article>
+    </motion.article>
   );
 };
 
