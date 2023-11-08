@@ -13,9 +13,16 @@ export const DataContextProvider = ({ children }) => {
             subtasks: []
         }
     ])
+    const [showSideBar, setShowSideBar] = useState(false)
+    const [modalData, setModalData] = useState({ visible: false, task: {} });
+
     return (
         <DataContext.Provider value={{
             tasks,
+            showSideBar,
+            modalData,
+            setModalData,
+            setShowSideBar,
             setTasks
         }}>
             { children }

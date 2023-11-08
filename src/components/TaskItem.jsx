@@ -7,8 +7,8 @@ import sound from "../assets/water-droplet.mp3";
 import EditIcon from "./EditIcon";
 import TaskForm from "./TaskForm";
 import { priorityToColorMapping, priorityToHexMapping } from "../../constants";
-const TaskItem = ({ task, onShowModal }) => {
-  const { setTasks } = useContext(DataContext);
+const TaskItem = ({ task }) => {
+  const { setTasks, setModalData, setShowSideBar } = useContext(DataContext);
   const { taskName, description, priority, id } = task;
   const [isEditing, setIsEditing] = useState(false);
   function completeAndRemoveHandler(event) {
@@ -23,7 +23,8 @@ const TaskItem = ({ task, onShowModal }) => {
   }
 
   function openDetailsHandler() {
-    onShowModal({ visible: true, task });
+    setModalData({ visible: true, task });
+    setShowSideBar(false)
   }
 
   function editHandler(event) {

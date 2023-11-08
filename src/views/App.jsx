@@ -2,22 +2,24 @@ import Header from "../components/Header";
 import Menu from "../components/Menu";
 import beginnerImage from "../assets/beginner-image.jpg";
 import AddTask from "../components/AddTask";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { DataContext } from "../context/DataContext";
 import TaskItem from "../components/TaskItem";
 import { AnimatePresence, motion } from "framer-motion";
 import TaskDetails from "../components/TaskDetails";
+import SideBar from "../components/SideBar";
 const App = () => {
-  const { tasks } = useContext(DataContext);
-  const [modalData, setModalData] = useState({ visible: false, task: {} });
+  const { tasks, showSideBar, modalData } = useContext(DataContext);
   return (
     <main
-      className={` relative p-5 h-screen w-screen overflow-hidden ${
-        modalData.visible &&
-        "backdrop-saturate-50 transition-colors duration-200 bg-black/30"
+      className={` relative p-5 h-screen w-screen transition-colors duration-500 overflow-hidden ${
+        modalData.visible || showSideBar
+          ? "backdrop-saturate-50 bg-black/30"
+          : "bg-white"
       }`}
     >
       <Menu />
+      <AnimatePresence>{showSideBar && <SideBar />}</AnimatePresence>
       <AnimatePresence>
         <section className="py-3 px-8">
           <section className="flex flex-col divide-y">
@@ -28,7 +30,6 @@ const App = () => {
                   <TaskItem
                     key={task.id}
                     task={task}
-                    onShowModal={setModalData}
                   />
                 );
               })}
@@ -61,7 +62,7 @@ const App = () => {
       </AnimatePresence>
       <AnimatePresence>
         {modalData.visible && (
-          <TaskDetails task={modalData.task} onCloseModal={setModalData} />
+          <TaskDetails task={modalData.task} />
         )}
       </AnimatePresence>
     </main>
