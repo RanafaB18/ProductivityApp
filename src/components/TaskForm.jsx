@@ -5,43 +5,57 @@ import PriorityList from "./PriorityList";
 import { Tooltip } from "react-tooltip";
 import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
-import { v4 as uuid } from "uuid"
+import { v4 as uuid } from "uuid";
 import { motion } from "framer-motion";
 const TaskForm = ({ onCloseForm, todo }) => {
-  const { setTasks } = useContext(DataContext)
-  const [task, setTask] = useState(todo ?? {
-    id: "",
-    taskName: "",
-    description: "",
-    subtasks: [],
-    priority: "P4",
-  });
-  const id = uuid()
-
+  const { setTasks } = useContext(DataContext);
+  const [task, setTask] = useState(
+    todo ?? {
+      id: "",
+      taskName: "",
+      description: "",
+      subtasks: [],
+      priority: "P4",
+    }
+  );
+  const id = uuid();
 
   function formUpdateHandler(event) {
     const { name, value } = event.target;
     setTask((prevFormData) => ({
       ...prevFormData,
       [name]: value,
-      id
+      id,
     }));
   }
-
   function submitFormHandler(event) {
     event.preventDefault();
     console.log("Form Data", task);
-    setTasks((prevTasks) => {
-      return [
-        ...prevTasks,
-        task
-      ]
-    })
-    onCloseForm()
 
+    if (todo) {
+      // is editing a task
+      setTasks((prevTasks) => {
+        return prevTasks.map((taskItem) => {
+          if (taskItem.id === todo.id) {
+            return task
+          } else {
+            return taskItem
+          }
+        })
+      })
+    } else {
+      // creating new task
+      setTasks((prevTasks) => {
+        return [...prevTasks, task];
+      });
+    }
+    onCloseForm()
   }
   return (
-    <motion.div layout className="bg-white shadow-lg border p-2 px-3 w-full rounded-lg">
+    <motion.div
+      layout
+      className="bg-white shadow-lg border p-2 px-3 w-full rounded-lg"
+    >
       <form className="flex flex-col" onSubmit={submitFormHandler}>
         <input
           type="text"
@@ -65,7 +79,7 @@ const TaskForm = ({ onCloseForm, todo }) => {
           data-tooltip-id="priorities"
           className="w-fit"
         >
-          <PriorityList setTask={setTask}/>
+          <PriorityList setTask={setTask} />
         </div>
         <div className="flex justify-end gap-2">
           <Tooltip noArrow id="cancel" className="!p-1 !px-2" />
@@ -86,7 +100,9 @@ const TaskForm = ({ onCloseForm, todo }) => {
             data-tooltip-id="send"
             type="submit"
             disabled={!task.taskName}
-            className={`${!task.taskName && "cursor-no-drop opacity-60"} bg-[#dc4c3e] hover:bg-red-600 rounded-md p-1`}
+            className={`${
+              !task.taskName && "cursor-no-drop opacity-60"
+            } bg-[#dc4c3e] hover:bg-red-600 rounded-md p-1`}
           >
             <SendIcon />
           </button>
@@ -99,5 +115,6 @@ const TaskForm = ({ onCloseForm, todo }) => {
 TaskForm.propTypes = {
   onCloseForm: PropTypes.func,
   todo: PropTypes.object,
+  isEditing: PropTypes.bool
 };
 export default TaskForm;

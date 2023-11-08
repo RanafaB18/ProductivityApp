@@ -21,7 +21,7 @@ const TaskItem = ({ task }) => {
   };
   const { setTasks } = useContext(DataContext);
   const { taskName, description, priority, id } = task;
-  const [isEditting, setIsEditting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   console.log("priority", priority);
   function completeAndRemoveHandler() {
     const audio = new Audio(sound);
@@ -34,12 +34,15 @@ const TaskItem = ({ task }) => {
   }
 
   function editHandler() {
-    setIsEditting(true);
+    setIsEditing(true);
+  }
+  function closeFormHandler() {
+    setIsEditing(false)
   }
   return (
     <section className="relative">
-      {isEditting ? (
-        <TaskForm todo={task}/>
+      {isEditing ? (
+        <TaskForm todo={task} onCloseForm={closeFormHandler}/>
       ) : (
         <motion.article
           layout

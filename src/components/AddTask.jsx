@@ -6,8 +6,8 @@ const AddTask = () => {
     function openTaskFormHandler(){
         setShowTaskForm(true)
     }
-    function closeTaskFormHandler(){
-        setShowTaskForm(false)
+    function closeFormHandler() {
+      setShowTaskForm(false)
     }
   return (
     <>
@@ -30,7 +30,7 @@ const AddTask = () => {
       <p className="group-hover:opacity-100 opacity-60">Add task</p>
     </button>
     </motion.div>
-    {showTaskForm && <TaskForm onCloseForm={closeTaskFormHandler}/>}
+    {showTaskForm && <TaskForm onCloseForm={closeFormHandler}/>}
     </>
   );
 };
