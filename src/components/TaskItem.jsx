@@ -6,23 +6,13 @@ import { Tooltip } from "react-tooltip";
 import sound from "../assets/water-droplet.mp3";
 import EditIcon from "./EditIcon";
 import TaskForm from "./TaskForm";
-const TaskItem = ({ task }) => {
-  const priorityToColorMapping = {
-    P1: "border-red-600 bg-red-500 hover:bg-red-200 text-red-600",
-    P2: "border-orange-600 bg-orange-500 hover:bg-orange-200 text-orange-500",
-    P3: "border-blue-600 bg-blue-500 hover:bg-blue-200 text-blue-500",
-    P4: "hover:bg-gray-200",
-  };
-  const priorityToHexMapping = {
-    P1: "#dc4c3e",
-    P2: "#ec9018",
-    P3: "#2872e0",
-    P4: "#a7a7a7",
-  };
+import { priorityToColorMapping, priorityToHexMapping } from "../../constants";
+const TaskItem = ({ task, onShowModal }) => {
   const { setTasks } = useContext(DataContext);
   const { taskName, description, priority, id } = task;
   const [isEditing, setIsEditing] = useState(false);
-  function completeAndRemoveHandler() {
+  function completeAndRemoveHandler(event) {
+    event.stopPropagation();
     const audio = new Audio(sound);
     audio.play();
     setTimeout(() => {
@@ -32,20 +22,26 @@ const TaskItem = ({ task }) => {
     }, 150);
   }
 
-  function editHandler() {
+  function openDetailsHandler() {
+    onShowModal({ visible: true, task });
+  }
+
+  function editHandler(event) {
+    event.stopPropagation();
     setIsEditing(true);
   }
   function closeFormHandler() {
-    setIsEditing(false)
+    setIsEditing(false);
   }
   return (
     <section className="relative">
       {isEditing ? (
-        <TaskForm todo={task} onCloseForm={closeFormHandler}/>
+        <TaskForm todo={task} onCloseForm={closeFormHandler} />
       ) : (
         <motion.article
           layout
           className="flex cursor-pointer items-start gap-3 py-3 min-h-[80px] group"
+          onClick={openDetailsHandler}
         >
           <motion.button
             whileTap={{
@@ -96,5 +92,6 @@ const TaskItem = ({ task }) => {
 
 TaskItem.propTypes = {
   task: PropTypes.object,
+  onShowModal: PropTypes.func,
 };
 export default TaskItem;

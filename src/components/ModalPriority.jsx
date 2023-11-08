@@ -16,7 +16,7 @@ const SingleValue = ({ ...props }) => (
   <components.SingleValue {...props}>
     <div className="flex items-center gap-1">
       <img loading="lazy" src={props.data.icon} className="w-4 h-4" alt={props.data.label} />
-      <p className="text-xs">{props.data.value}</p>
+      <p>{props.data.label}</p>
     </div>
   </components.SingleValue>
 );
@@ -27,7 +27,7 @@ const options = [
   { value: "P3", label: "Priority 3", icon: "src/assets/flag3.svg" },
   { value: "P4", label: "Priority 4", icon: "src/assets/flag4.svg" },
 ];
-const PriorityList = ({ setTask, taskPriority }) => {
+const ModalPriority = ({ setTask, taskPriority }) => {
   const [currentPriority, setCurrentPriority] = useState(
     options.find((option) => option.value === taskPriority) || options[3]
   );
@@ -38,34 +38,34 @@ const PriorityList = ({ setTask, taskPriority }) => {
     }));
     setCurrentPriority(choice)
   }
-  const customStyles = {
-    control: () => ({
-      display: "flex",
-      border: "1px solid #ececec",
-      borderRadius: "5px",
-      "&:hover": {
-        backgroundColor: "#e3e1e1",
-      },
-    }),
-    menu: (styles) => ({
-      ...styles,
-      width: "150px",
-    }),
-    valueContainer: (styles) => ({
-      ...styles,
-      paddingInline: "3px",
-    }),
-    clearIndicator: (styles) => ({
-      ...styles,
-      padding: 0,
-      marginRight: "3px",
-      width: "15px",
-      color: "#797979",
-    }),
-  };
+  // const customStyles = {
+  //   control: () => ({
+  //     display: "flex",
+  //     border: "1px solid #ececec",
+  //     borderRadius: "5px",
+  //     "&:hover": {
+  //       backgroundColor: "#e3e1e1",
+  //     },
+  //   }),
+  //   menu: (styles) => ({
+  //     ...styles,
+  //     width: "150px",
+  //   }),
+  //   valueContainer: (styles) => ({
+  //     ...styles,
+  //     paddingInline: "3px",
+  //   }),
+  //   clearIndicator: (styles) => ({
+  //     ...styles,
+  //     padding: 0,
+  //     marginRight: "3px",
+  //     width: "15px",
+  //     color: "#797979",
+  //   }),
+  // };
   return (
     <Select
-      className="w-fit cursor-pointer"
+      className="w-5/6 mx-auto cursor-pointer"
       name="priority"
       onChange={(choice) => updatePriority(choice)}
       options={options}
@@ -75,7 +75,7 @@ const PriorityList = ({ setTask, taskPriority }) => {
         IndicatorSeparator: () => null,
         DropdownIndicator: () => null,
       }}
-      isClearable
+      // isClearable
       placeholder={
         <div className="flex items-center gap-1">
           <img loading="lazy" src={flag4} alt="flag" className="w-4 h-4" />
@@ -83,10 +83,10 @@ const PriorityList = ({ setTask, taskPriority }) => {
         </div>
       }
       isSearchable={false}
-      styles={customStyles}
+      // styles={customStyles}
       value={currentPriority}
     />
   );
 };
 
-export default PriorityList;
+export default ModalPriority;

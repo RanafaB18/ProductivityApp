@@ -59,7 +59,7 @@ const TaskForm = ({ onCloseForm, todo }) => {
       <form className="flex flex-col" onSubmit={submitFormHandler}>
         <input
           type="text"
-          className="outline-none placeholder:font-semibold mb-5"
+          className="outline-none placeholder:font-semibold font-semibold mb-5"
           placeholder="Task name"
           name="taskName"
           value={task.taskName}
