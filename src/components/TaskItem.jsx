@@ -46,7 +46,7 @@ const TaskItem = ({ task }) => {
       ) : (
         <motion.article
           layout
-          className="flex items-start gap-3 py-3 min-h-[80px]"
+          className="flex cursor-pointer items-start gap-3 py-3 min-h-[80px] group"
         >
           <motion.button
             whileTap={{
@@ -85,7 +85,7 @@ const TaskItem = ({ task }) => {
             data-tooltip-content={"Edit task"}
             data-tooltip-offset={2}
             data-tooltip-id="edit-task"
-            className="absolute right-0 opacity-60 cursor-pointer hover:bg-gray-100"
+            className="group-hover:flex hidden absolute right-0 opacity-60 cursor-pointer hover:bg-gray-100"
           >
             <EditIcon />
           </button>
