@@ -22,7 +22,6 @@ const TaskItem = ({ task }) => {
   const { setTasks } = useContext(DataContext);
   const { taskName, description, priority, id } = task;
   const [isEditing, setIsEditing] = useState(false);
-  console.log("priority", priority);
   function completeAndRemoveHandler() {
     const audio = new Audio(sound);
     audio.play();
