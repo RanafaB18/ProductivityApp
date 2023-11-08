@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import Select, { components } from "react-select";
 import flag4 from "../assets/flag4.svg";
+import { useState } from "react";
 const { Option } = components;
 const IconOption = (props) => (
   <Option {...props}>
@@ -20,21 +21,22 @@ const SingleValue = ({ ...props }) => (
   </components.SingleValue>
 );
 
-
-
 const options = [
   { value: "P1", label: "Priority 1", icon: "src/assets/flag1.svg" },
   { value: "P2", label: "Priority 2", icon: "src/assets/flag2.svg" },
   { value: "P3", label: "Priority 3", icon: "src/assets/flag3.svg" },
   { value: "P4", label: "Priority 4", icon: "src/assets/flag4.svg" },
 ];
-const PriorityList = ({ setTask }) => {
-  function updatePriority(priority) {
+const PriorityList = ({ setTask, taskPriority }) => {
+  const [currentPriority, setCurrentPriority] = useState(
+    options.find((option) => option.value === taskPriority) || options[3]
+  );
+  function updatePriority(choice) {
     setTask((prevData) => ({
       ...prevData,
-      priority
-    })
-    )
+      priority: choice?.value || "P4",
+    }));
+    setCurrentPriority(choice)
   }
   const customStyles = {
     control: () => ({
@@ -65,7 +67,7 @@ const PriorityList = ({ setTask }) => {
     <Select
       className="w-fit cursor-pointer"
       name="priority"
-      onChange={(choice) => updatePriority(choice?.value || 'P4' )}
+      onChange={(choice) => updatePriority(choice)}
       options={options}
       components={{
         Option: IconOption,
@@ -76,12 +78,13 @@ const PriorityList = ({ setTask }) => {
       isClearable
       placeholder={
         <div className="flex items-center gap-1">
-          <img src={flag4} alt="flag" className="w-4 h-4"/>
+          <img src={flag4} alt="flag" className="w-4 h-4" />
           <p className="text-sm">Priority</p>
         </div>
       }
       isSearchable={false}
       styles={customStyles}
+      value={currentPriority}
     />
   );
 };

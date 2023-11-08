@@ -79,7 +79,7 @@ const TaskForm = ({ onCloseForm, todo }) => {
           data-tooltip-id="priorities"
           className="w-fit"
         >
-          <PriorityList setTask={setTask} />
+          <PriorityList setTask={setTask} taskPriority={todo?.priority || task.priority}/>
         </div>
         <div className="flex justify-end gap-2">
           <Tooltip noArrow id="cancel" className="!p-1 !px-2" />
