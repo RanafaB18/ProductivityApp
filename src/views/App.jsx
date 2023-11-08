@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const App = () => {
   const { tasks } = useContext(DataContext);
   return (
-    <main className="p-5">
+    <main className=" relative p-5">
       <Menu />
       <AnimatePresence>
         <section className="py-3 px-8">
@@ -27,7 +27,7 @@ const App = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.5 } }}
               aria-label="todos"
-              className="flex flex-col items-center max-w-xs mx-auto"
+              className="absolute left-0 right-0 m-auto -z-10 flex flex-col items-center max-w-xs mx-auto"
             >
               <img src={beginnerImage} alt="" className="w-fit" />
               <p className="font-semibold text-center">
