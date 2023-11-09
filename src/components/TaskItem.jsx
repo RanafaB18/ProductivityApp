@@ -7,7 +7,8 @@ import sound from "../assets/water-droplet.mp3";
 import EditIcon from "./EditIcon";
 import TaskForm from "./TaskForm";
 import { priorityToColorMapping, priorityToHexMapping } from "../../constants";
-import { completeTask } from "../services/crud";
+import { completeTask, deleteTask } from "../services/crud";
+import DeleteIcon from "./DeleteIcon";
 const TaskItem = ({ task }) => {
   const { setTasks, setModalData, setShowSideBar } = useContext(DataContext);
   const { name, description, priority, id } = task;
@@ -21,19 +22,27 @@ const TaskItem = ({ task }) => {
         return prevTasks.filter((task) => task.id !== id);
       });
     }, 150);
-    const response = await completeTask(id)
+    const response = await completeTask(id);
     console.log("Complete", response);
   }
 
   function openDetailsHandler(event) {
-    event.stopPropagation()
+    event.stopPropagation();
     setModalData({ visible: true, task });
-    setShowSideBar(false)
+    setShowSideBar(false);
   }
 
   function editHandler(event) {
     event.stopPropagation();
     setIsEditing(true);
+  }
+  async function deleteHandler(event) {
+    event.stopPropagation()
+    setTasks((prevTasks) => {
+      return prevTasks.filter((task) => task.id !== id);
+    });
+    const response = await deleteTask(id)
+    console.log("Deleted", response);
   }
   function closeFormHandler() {
     setIsEditing(false);
@@ -79,16 +88,28 @@ const TaskItem = ({ task }) => {
               {description}
             </p>
           </div>
-          <Tooltip noArrow id="edit-task" className="!p-1 !px-2" />
-          <button
-            onClick={editHandler}
-            data-tooltip-content={"Edit task"}
-            data-tooltip-offset={2}
-            data-tooltip-id="edit-task"
-            className="group-hover:flex hidden absolute right-0 opacity-60 cursor-pointer hover:bg-gray-100"
-          >
-            <EditIcon />
-          </button>
+          <div className="group-hover:flex gap-2 hidden absolute right-0 opacity-60 cursor-pointer">
+            <Tooltip noArrow id="edit-task" className="!p-1 !px-2" />
+            <button
+              onClick={editHandler}
+              data-tooltip-content={"Edit task"}
+              data-tooltip-offset={2}
+              data-tooltip-id="edit-task"
+              className="hover:bg-gray-100"
+            >
+              <EditIcon />
+            </button>
+            <Tooltip noArrow id="delete-task" className="!p-1 !px-2" />
+            <button
+              onClick={deleteHandler}
+              data-tooltip-content={"Delete task"}
+              data-tooltip-offset={2}
+              data-tooltip-id="delete-task"
+              className="text-red-600 "
+            >
+              <DeleteIcon />
+            </button>
+          </div>
         </motion.article>
       )}
     </section>

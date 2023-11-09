@@ -6,7 +6,6 @@ import { useContext, useState } from "react";
 import ModalPriority from "./ModalPriority";
 import { DataContext } from "../context/DataContext";
 import sound from "../assets/water-droplet.mp3";
-import AddTask from "./AddTask";
 
 const variant = {
   hidden: { height: 0 },
@@ -158,7 +157,6 @@ const TaskDetails = ({ task }) => {
         </form>
       </motion.article>
       <ModalPriority setTask={setEditTask} taskPriority={editTask.priority} />
-      <AddTask />
     </motion.section>
   );
 };

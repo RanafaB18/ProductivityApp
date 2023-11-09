@@ -20,7 +20,6 @@ const App = () => {
     if (!taskDetailRef.current?.contains(e.target)) {
       setModalData((prevState) => ({ ...prevState, visible: false}));
     }
-    console.log(e.target);
   }
 
 
@@ -34,7 +33,7 @@ const App = () => {
     <main
       className={` relative p-5 h-screen w-screen transition-colors duration-500 overflow-hidden ${
         modalData.visible || showSideBar
-          ? "backdrop-saturate-50 bg-black/30"
+          ? "backdrop-saturate-50 bg-black/30 h-screen w-screen pointer-events-none"
           : "bg-white"
       }`}
     >
@@ -81,7 +80,7 @@ const App = () => {
       </AnimatePresence>
       <AnimatePresence>
         {modalData.visible && (
-          <div ref={taskDetailRef}>
+          <div ref={taskDetailRef} className="">
             <TaskDetails task={modalData.task} />
           </div>
         )}

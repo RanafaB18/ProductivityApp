@@ -24,8 +24,20 @@ const completeTask = async (id) => {
     return response
 }
 
+const deleteTask = async (id) => {
+    const response = await client.delete(`/task/${id}/`, { headers })
+    return response
+}
+
+const updateTask = async (id, newTask) => {
+    const response = await client.patch(`/task/${id}/`, newTask, { headers } )
+    return response
+}
+
 export {
     getTasks,
     addTask,
-    completeTask
+    completeTask,
+    deleteTask,
+    updateTask
 }

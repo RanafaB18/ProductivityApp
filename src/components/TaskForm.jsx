@@ -5,9 +5,8 @@ import PriorityList from "./PriorityList";
 import { Tooltip } from "react-tooltip";
 import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
-import { v4 as uuid } from "uuid";
 import { motion } from "framer-motion";
-import { addTask } from "../services/crud";
+import { addTask, updateTask } from "../services/crud";
 const TaskForm = ({ onCloseForm, todo }) => {
   const { setTasks } = useContext(DataContext);
   const [task, setTask] = useState(
@@ -19,14 +18,11 @@ const TaskForm = ({ onCloseForm, todo }) => {
       priority: "P4",
     }
   );
-  const id = uuid();
-
   function formUpdateHandler(event) {
     const { name, value } = event.target;
     setTask((prevFormData) => ({
       ...prevFormData,
       [name]: value,
-      id,
     }));
   }
   async function submitFormHandler(event) {
@@ -44,15 +40,19 @@ const TaskForm = ({ onCloseForm, todo }) => {
           }
         })
       })
+      onCloseForm()
+      console.log("Task", task);
+      const response = await updateTask(task.id, task)
+      console.log("Edited", response);
     } else {
       // creating new task
       setTasks((prevTasks) => {
         return [...prevTasks, task];
       });
+      onCloseForm()
+      const response = await addTask(task)
+      console.log("Adding tasks", response.data);
     }
-    onCloseForm()
-    const response = await addTask(task)
-    console.log("Adding tasks", response.data);
   }
   return (
     <motion.div
