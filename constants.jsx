@@ -15,3 +15,4 @@ export const priorityToHexMapping = {
     month: "short",
     day: "numeric"
   });
+  export const emailRegex = /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/;

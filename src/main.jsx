@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     element: <App />
   },
   {
-    path: '/signUp',
+    path: '/signup',
     element: <SignUp/>
   },
   {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     element: <Login />
   },
   {
-    path: '/Reset-Password',
+    path: '/reset-password',
     element: <Resetpassword />
   },
 

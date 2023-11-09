@@ -1,14 +1,17 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
 
-    const [email, setEmail] = useState('');
+        const [username, setUsername] = useState('');
         const [password, setPassword] = useState('');
+        
+
         const [error, setError] = useState('');
     
         const handleEmailChange = (e) => {
-        setEmail(e.target.value);
+        setUsername(e.target.value);
         };
     
         const handlePasswordChange = (e) => {
@@ -18,18 +21,33 @@ const Login = () => {
         const handleSubmit = (e) => {
         e.preventDefault();
     
-        if (!email) {
-            setError(console.log('Email is required'));
-            return;
+
+        if (username && password) {
+            axios.post('https://claraborlu.pythonanywhere.com/accounts/login/',{ username: username , password},{
+                headers: {
+                    'Authorization': 'Token 3739b90244d5f0a192bdb2c8209f7a6c27127fe8',
+                    // 'Content-Type': 'application/json',
+                    // 'Accept': 'application/json'
+                }
+             }
+             )
+             .then((response)=>{
+                if(response.status == 200){
+                console.log("use authentication");                                                                              
+                }else{
+                    console.log("user not authenticated");
+                }
+        
+             })
+             .catch(()=>{
+                console.log("Failure");
+             });
+
+        } else {
+
+            setError(e.target.value)
         }
     
-        if (!password) {
-            setError(console.log('Password is required'));
-            return;
-        }
-    
-          // Perform login logic here
-        console.log('Login successful!');
         };
 
 return (
@@ -38,14 +56,14 @@ return (
 <h2>Login</h2>
 <form  className="login-form" onSubmit={handleSubmit}>
     <div className="login-group">
-        <label htmlFor="email">Email Address:</label>
+        <label htmlFor="username">Username:</label>
         <input
-        type="email"
-        id="email"
-        name='email'
-        value={email}
+        type="text"
+        id="username"
+        name='username'
+        value={username}
         onChange={handleEmailChange}
-        placeholder="justiceabban002@gmail.com" required/>
+        placeholder="patrick" required/>
     </div>
 
     <div className="login-group">
@@ -62,7 +80,7 @@ return (
     {error && <span>{error}</span>}
 
     <div className="login-group">
-        <p className="form-group">Forgotten Your Password? <Link to='/Reset-Password'>Reset Password</Link></p>
+        <p className="form-group">Forgotten Your Password? <Link to='/reset-password'>Reset Password</Link></p>
         <button className='btn' type="submit">Login</button>
     </div>
 </form>
