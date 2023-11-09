@@ -7,11 +7,12 @@ import sound from "../assets/water-droplet.mp3";
 import EditIcon from "./EditIcon";
 import TaskForm from "./TaskForm";
 import { priorityToColorMapping, priorityToHexMapping } from "../../constants";
+import { completeTask } from "../services/crud";
 const TaskItem = ({ task }) => {
   const { setTasks, setModalData, setShowSideBar } = useContext(DataContext);
-  const { taskName, description, priority, id } = task;
+  const { name, description, priority, id } = task;
   const [isEditing, setIsEditing] = useState(false);
-  function completeAndRemoveHandler(event) {
+  async function completeAndRemoveHandler(event) {
     event.stopPropagation();
     const audio = new Audio(sound);
     audio.play();
@@ -20,6 +21,8 @@ const TaskItem = ({ task }) => {
         return prevTasks.filter((task) => task.id !== id);
       });
     }, 150);
+    const response = await completeTask(id)
+    console.log("Complete", response);
   }
 
   function openDetailsHandler(event) {
@@ -70,7 +73,7 @@ const TaskItem = ({ task }) => {
           </motion.button>
           <div className="flex flex-col gap-1 max-w-sm">
             <p className="text-sm overflow-hidden whitespace-nowrap text-ellipsis">
-              {taskName}
+              {name}
             </p>
             <p className="text-xs opacity-70 overflow-hidden whitespace-nowrap text-ellipsis">
               {description}

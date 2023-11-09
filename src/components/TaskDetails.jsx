@@ -125,8 +125,8 @@ const TaskDetails = ({ task }) => {
           <input
             type="text"
             className="peer outline-none text-xl font-semibold overflow-hidden whitespace-nowrap text-ellipsis"
-            name="taskName"
-            value={editTask.taskName}
+            name="name"
+            value={editTask.name}
             onChange={editFormHandler}
           />
           <input
@@ -147,9 +147,9 @@ const TaskDetails = ({ task }) => {
             </button>
             <button
               type="submit"
-              disabled={!editTask.taskName}
+              disabled={!editTask.name}
               className={`${
-                !editTask.taskName && "cursor-no-drop opacity-60"
+                !editTask.name && "cursor-no-drop opacity-60"
               } bg-[#dc4c3e] hover:bg-red-600 rounded-md py-1 px-3 text-sm font-semibold text-white`}
             >
               Save

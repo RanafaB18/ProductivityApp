@@ -13,7 +13,7 @@ const TaskForm = ({ onCloseForm, todo }) => {
   const [task, setTask] = useState(
     todo ?? {
       id: "",
-      taskName: "",
+      name: "",
       description: "",
       subtasks: [],
       priority: "P4",
@@ -49,13 +49,10 @@ const TaskForm = ({ onCloseForm, todo }) => {
       setTasks((prevTasks) => {
         return [...prevTasks, task];
       });
-
-      const response = await addTask(task)
-      console.log("Adding tasks", response.data);
-
-
     }
     onCloseForm()
+    const response = await addTask(task)
+    console.log("Adding tasks", response.data);
   }
   return (
     <motion.div
@@ -67,8 +64,8 @@ const TaskForm = ({ onCloseForm, todo }) => {
           type="text"
           className="outline-none placeholder:font-semibold font-semibold mb-5"
           placeholder="Task name"
-          name="taskName"
-          value={task.taskName}
+          name="name"
+          value={task.name}
           onChange={formUpdateHandler}
         />
         <textarea
@@ -105,9 +102,9 @@ const TaskForm = ({ onCloseForm, todo }) => {
             data-tooltip-content={"Add task"}
             data-tooltip-id="send"
             type="submit"
-            disabled={!task.taskName}
+            disabled={!task.name}
             className={`${
-              !task.taskName && "cursor-no-drop opacity-60"
+              !task.name && "cursor-no-drop opacity-60"
             } bg-[#dc4c3e] hover:bg-red-600 rounded-md p-1`}
           >
             <SendIcon />
