@@ -80,7 +80,7 @@ return (
     {error && <span>{error}</span>}
 
     <div className="login-group">
-        <p className="form-group">Forgotten Your Password? <Link to='/Reset-Password'>Reset Password</Link></p>
+        <p className="form-group">Forgotten Your Password? <Link to='/reset-password'>Reset Password</Link></p>
         <button className='btn' type="submit">Login</button>
     </div>
 </form>
