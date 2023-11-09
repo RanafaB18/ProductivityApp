@@ -5,6 +5,7 @@ import App from './views/App'
 import Login from './views/Login'
 import Resetpassword from './views/Resetpassword'
 import { SignUp } from './views/SignUp'
+import { DataContextProvider } from "./context/DataContext";
 
 
 const router = createBrowserRouter([
@@ -26,6 +27,8 @@ const router = createBrowserRouter([
   },
   
 ])
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
-)
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <DataContextProvider>
+    <RouterProvider router={router} />
+  </DataContextProvider>
+);
