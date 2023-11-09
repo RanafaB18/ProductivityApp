@@ -2,14 +2,34 @@ import Header from "../components/Header";
 import Menu from "../components/Menu";
 import beginnerImage from "../assets/beginner-image.jpg";
 import AddTask from "../components/AddTask";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { DataContext } from "../context/DataContext";
 import TaskItem from "../components/TaskItem";
 import { AnimatePresence, motion } from "framer-motion";
 import TaskDetails from "../components/TaskDetails";
 import SideBar from "../components/SideBar";
 const App = () => {
-  const { tasks, showSideBar, modalData } = useContext(DataContext);
+  const { tasks, setShowSideBar, setModalData, showSideBar, modalData } = useContext(DataContext);
+  const sideBarRef = useRef();
+  const taskDetailRef = useRef();
+  const menuRef = useRef();
+  function closeModalHandler(e) {
+    if (!sideBarRef.current?.contains(e.target) && !menuRef.current?.contains(e.target)) {
+      setShowSideBar(false);
+    }
+    if (!taskDetailRef.current?.contains(e.target)) {
+      setModalData((prevState) => ({ ...prevState, visible: false}));
+    }
+    console.log(e.target);
+  }
+
+
+  useEffect(() => {
+    document.addEventListener("click", closeModalHandler);
+    return () => {
+      document.removeEventListener("click", closeModalHandler);
+    };
+  });
   return (
     <main
       className={` relative p-5 h-screen w-screen transition-colors duration-500 overflow-hidden ${
@@ -18,10 +38,12 @@ const App = () => {
           : "bg-white"
       }`}
     >
-      <div className="absolute">
+      <div ref={menuRef} className="absolute">
         <Menu />
       </div>
-      <SideBar />
+      <div ref={sideBarRef}>
+        <SideBar />
+      </div>
       <AnimatePresence>
         <section className="p-8">
           <section className="flex flex-col divide-y">
@@ -58,7 +80,11 @@ const App = () => {
         </section>
       </AnimatePresence>
       <AnimatePresence>
-        {modalData.visible && <TaskDetails task={modalData.task} />}
+        {modalData.visible && (
+          <div ref={taskDetailRef}>
+            <TaskDetails task={modalData.task} />
+          </div>
+        )}
       </AnimatePresence>
     </main>
   );

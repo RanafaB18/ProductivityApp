@@ -32,7 +32,8 @@ const TaskItem = ({ task }) => {
     })
   }
 
-  function openDetailsHandler() {
+  function openDetailsHandler(event) {
+    event.stopPropagation()
     setModalData({ visible: true, task });
     setShowSideBar(false)
   }
