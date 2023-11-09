@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { todayDate } from "../../constants";
 
 export const DataContext = createContext()
 
@@ -15,12 +16,20 @@ export const DataContextProvider = ({ children }) => {
     ])
     const [showSideBar, setShowSideBar] = useState(false)
     const [modalData, setModalData] = useState({ visible: false, task: {} });
-
+    const [calculations, setCalculations] = useState({
+        [todayDate]: {
+            numberOfTasks: 0,
+            doneTasks: 0
+        }
+    })
+    console.log("Calculation", calculations);
     return (
         <DataContext.Provider value={{
             tasks,
             showSideBar,
             modalData,
+            calculations,
+            setCalculations,
             setModalData,
             setShowSideBar,
             setTasks

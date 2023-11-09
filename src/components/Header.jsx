@@ -1,9 +1,5 @@
+import { todayDate } from "../../constants";
 const Header = () => {
-  const todayDate = new Date().toLocaleDateString(undefined, {
-    weekday: "short",
-    month: "short",
-    day: "numeric"
-  });
   return (
       <article className="flex justify-between items-center mb-3">
         <div className="flex items-baseline gap-2">

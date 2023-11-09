@@ -10,3 +10,8 @@ export const priorityToHexMapping = {
     P3: "#2872e0",
     P4: "#a7a7a7",
   };
+  export const todayDate = new Date().toLocaleDateString(undefined, {
+    weekday: "short",
+    month: "short",
+    day: "numeric"
+  });

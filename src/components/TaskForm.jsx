@@ -8,7 +8,7 @@ import { DataContext } from "../context/DataContext";
 import { v4 as uuid } from "uuid";
 import { motion } from "framer-motion";
 const TaskForm = ({ onCloseForm, todo }) => {
-  const { setTasks } = useContext(DataContext);
+  const { setTasks, setCalculations } = useContext(DataContext);
   const [task, setTask] = useState(
     todo ?? {
       id: "",
@@ -45,9 +45,22 @@ const TaskForm = ({ onCloseForm, todo }) => {
       })
     } else {
       // creating new task
+      const todayDate = new Date().toLocaleDateString(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "numeric"
+      });
       setTasks((prevTasks) => {
+        setCalculations((prevState) => ({
+          ...prevState,
+          [todayDate]: {
+            numberOfTasks: prevTasks.length,
+          }
+        }))
         return [...prevTasks, task];
       });
+
+
     }
     onCloseForm()
   }
