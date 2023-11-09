@@ -15,8 +15,8 @@ export const DataContextProvider = ({ children }) => {
 
         fetchData().then((res) => {
             console.log("Response", res);
-            console.log(res.data['Today']);
-            setTasks(res.data['Today'].sort((a, b) => (b.priority - a.priority)))
+            console.log(res.data)
+            setTasks(res.data.sort((a, b) => (b.priority - a.priority)))
         })
     }, [])
     return (

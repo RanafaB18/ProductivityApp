@@ -30,7 +30,7 @@ const deleteTask = async (id) => {
 }
 
 const updateTask = async (id, newTask) => {
-    const response = await client.patch(`/task/${id}/`, newTask, { headers } )
+    const response = await client.put(`/task/${id}/`, newTask, { headers } )
     return response
 }
 

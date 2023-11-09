@@ -12,6 +12,7 @@ import DeleteIcon from "./DeleteIcon";
 const TaskItem = ({ task }) => {
   const { setTasks, setModalData, setShowSideBar } = useContext(DataContext);
   const { name, description, priority, id } = task;
+  console.log("Priority", priority);
   const [isEditing, setIsEditing] = useState(false);
   async function completeAndRemoveHandler(event) {
     event.stopPropagation();
