@@ -1,6 +1,5 @@
-import { useState } from "react"
 
-useState
+
 const Resetpassword = () => {
 return (
     <>

@@ -3,9 +3,9 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './views/App'
 import Login from './views/Login'
-import Resetpassword from './views/Resetpassword'
 import { SignUp } from './views/SignUp'
 import { DataContextProvider } from "./context/DataContext";
+import Resetpassword from './views/ResetPassword'
 
 
 const router = createBrowserRouter([
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     path: '/Reset-Password',
     element: <Resetpassword />
   },
-  
+
 ])
 ReactDOM.createRoot(document.getElementById("root")).render(
   <DataContextProvider>
