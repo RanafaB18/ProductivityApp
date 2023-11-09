@@ -11,7 +11,7 @@ body {
 
 .signup-container,
 .login-container,
-.resetpassword-container {
+.resetPassword-container {
     background-color: #fff;
     border-radius: 5px;
     padding: 20px;
@@ -35,9 +35,7 @@ h2 {
 
 .form-group,
 .login-group,
-.resetPassword-group,
-.confirmPassword-group,
-.resetPassword {
+.password-form {
     margin: 10px 0;
 }
 
@@ -73,11 +71,6 @@ input[type="send"] {
     margin: 0 0 20px;
 }
 
-input[type="submit"],
-input[type="send"]:hover {
-    cursor: pointer;
-}
-
 p a {
     color: #fa8232;
     text-transform: capitalize;
@@ -86,6 +79,18 @@ p a {
 p {
     color: #191c1f;
     text-transform: capitalize;
+}
+
+.login-group .btn,
+.form-group .btn,
+.password-form .btn {
+    background-color: #fa8232;
+    width: 100%;
+    text-transform: uppercase;
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
 }
 
 @tailwind base;
