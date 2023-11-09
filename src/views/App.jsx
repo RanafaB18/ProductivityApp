@@ -18,20 +18,17 @@ const App = () => {
           : "bg-white"
       }`}
     >
-      <Menu />
-      <AnimatePresence>{showSideBar && <SideBar />}</AnimatePresence>
+      <div className="absolute">
+        <Menu />
+      </div>
+      <SideBar />
       <AnimatePresence>
-        <section className="py-3 px-8">
+        <section className="p-8">
           <section className="flex flex-col divide-y">
             <Header />
             {tasks.length !== 0 &&
               tasks.map((task) => {
-                return (
-                  <TaskItem
-                    key={task.id}
-                    task={task}
-                  />
-                );
+                return <TaskItem key={task.id} task={task} />;
               })}
             <AddTask />
           </section>
@@ -61,9 +58,7 @@ const App = () => {
         </section>
       </AnimatePresence>
       <AnimatePresence>
-        {modalData.visible && (
-          <TaskDetails task={modalData.task} />
-        )}
+        {modalData.visible && <TaskDetails task={modalData.task} />}
       </AnimatePresence>
     </main>
   );

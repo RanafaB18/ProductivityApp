@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { todayDate } from "../../constants";
 
 export const DataContext = createContext()
 
@@ -14,10 +13,13 @@ export const DataContextProvider = ({ children }) => {
             subtasks: []
         }
     ])
+    const weekday = new Date().toLocaleDateString(undefined, {
+        weekday: 'long'
+    })
     const [showSideBar, setShowSideBar] = useState(false)
     const [modalData, setModalData] = useState({ visible: false, task: {} });
     const [calculations, setCalculations] = useState({
-        [todayDate]: {
+        [weekday]: {
             numberOfTasks: 0,
             doneTasks: 0
         }
