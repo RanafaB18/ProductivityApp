@@ -1,37 +1,29 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { getTasks } from "../services/crud";
 
 export const DataContext = createContext()
 
 // eslint-disable-next-line react/prop-types
 export const DataContextProvider = ({ children }) => {
-    const [tasks, setTasks] = useState([
-        {
-            taskName: 'washing',
-            description: 'clothes',
-            priority: 'P4',
-            id: '1-3132i023',
-            subtasks: []
-        }
-    ])
-    const weekday = new Date().toLocaleDateString(undefined, {
-        weekday: 'long'
-    })
+    const [tasks, setTasks] = useState([])
     const [showSideBar, setShowSideBar] = useState(false)
     const [modalData, setModalData] = useState({ visible: false, task: {} });
-    const [calculations, setCalculations] = useState({
-        [weekday]: {
-            numberOfTasks: 0,
-            doneTasks: 0
+    useEffect(() => {
+        async function fetchData() {
+            return await getTasks()
         }
-    })
-    console.log("Calculation", calculations);
+
+        fetchData().then((res) => {
+            console.log("Response", res);
+            console.log(res.data['Today']);
+            setTasks(res.data['Today'])
+        })
+    }, [])
     return (
         <DataContext.Provider value={{
             tasks,
             showSideBar,
             modalData,
-            calculations,
-            setCalculations,
             setModalData,
             setShowSideBar,
             setTasks

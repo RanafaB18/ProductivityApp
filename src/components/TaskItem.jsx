@@ -6,10 +6,9 @@ import { Tooltip } from "react-tooltip";
 import sound from "../assets/water-droplet.mp3";
 import EditIcon from "./EditIcon";
 import TaskForm from "./TaskForm";
-import { todayDate } from "../../constants";
 import { priorityToColorMapping, priorityToHexMapping } from "../../constants";
 const TaskItem = ({ task }) => {
-  const { setTasks, setModalData, setShowSideBar, setCalculations } = useContext(DataContext);
+  const { setTasks, setModalData, setShowSideBar } = useContext(DataContext);
   const { taskName, description, priority, id } = task;
   const [isEditing, setIsEditing] = useState(false);
   function completeAndRemoveHandler(event) {
@@ -21,15 +20,6 @@ const TaskItem = ({ task }) => {
         return prevTasks.filter((task) => task.id !== id);
       });
     }, 150);
-    setCalculations((prevState) => {
-      return {
-        ...prevState,
-        [todayDate]: {
-          numberOfTasks: prevState[todayDate].numberOfTasks,
-          doneTasks: prevState[todayDate].doneTasks + 1
-        }
-      }
-    })
   }
 
   function openDetailsHandler(event) {

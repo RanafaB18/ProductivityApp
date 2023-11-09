@@ -7,8 +7,9 @@ import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import { v4 as uuid } from "uuid";
 import { motion } from "framer-motion";
+import { addTask } from "../services/crud";
 const TaskForm = ({ onCloseForm, todo }) => {
-  const { setTasks, setCalculations } = useContext(DataContext);
+  const { setTasks } = useContext(DataContext);
   const [task, setTask] = useState(
     todo ?? {
       id: "",
@@ -28,7 +29,7 @@ const TaskForm = ({ onCloseForm, todo }) => {
       id,
     }));
   }
-  function submitFormHandler(event) {
+  async function submitFormHandler(event) {
     event.preventDefault();
     console.log("Form Data", task);
 
@@ -45,20 +46,12 @@ const TaskForm = ({ onCloseForm, todo }) => {
       })
     } else {
       // creating new task
-      const todayDate = new Date().toLocaleDateString(undefined, {
-        weekday: "short",
-        month: "short",
-        day: "numeric"
-      });
       setTasks((prevTasks) => {
-        setCalculations((prevState) => ({
-          ...prevState,
-          [todayDate]: {
-            numberOfTasks: prevTasks.length,
-          }
-        }))
         return [...prevTasks, task];
       });
+
+      const response = await addTask(task)
+      console.log("Adding tasks", response.data);
 
 
     }
