@@ -63,7 +63,7 @@ return (
         name='username'
         value={username}
         onChange={handleEmailChange}
-        placeholder="Username" required/>
+        placeholder="patrick" required/>
     </div>
 
     <div className="login-group">
