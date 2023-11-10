@@ -9,11 +9,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import TaskDetails from "../components/TaskDetails";
 import SideBar from "../components/SideBar";
 const App = () => {
-  const { tasks, setShowSideBar, setModalData, showSideBar, modalData } =
-    useContext(DataContext);
+  const {
+    tasks,
+    setShowSideBar,
+    setShowTaskForm,
+    setModalData,
+    showSideBar,
+    modalData,
+  } = useContext(DataContext);
   const sideBarRef = useRef();
   const taskDetailRef = useRef();
   const menuRef = useRef();
+  const addTaskRef = useRef();
   function closeModalHandler(e) {
     if (
       !sideBarRef.current?.contains(e.target) &&
@@ -23,6 +30,9 @@ const App = () => {
     }
     if (!taskDetailRef.current?.contains(e.target)) {
       setModalData((prevState) => ({ ...prevState, visible: false }));
+    }
+    if (!addTaskRef.current?.contains(e.target)) {
+      setShowTaskForm(false);
     }
   }
 
@@ -47,20 +57,23 @@ const App = () => {
         <SideBar />
       </div>
       <section className="p-8">
-        <section className="flex flex-col divide-y">
+        <section
+          className={`flex flex-col divide-y md:max-w-lg lg:max-w-3xl ${showSideBar ? "lg:pl-32" : ""} mx-auto`}
+        >
           <Header />
           {tasks.length !== 0 &&
             tasks.map((task) => {
               return <TaskItem key={task.id} task={task} />;
             })}
-          <AddTask />
+          <div ref={addTaskRef}>
+            <AddTask />
+          </div>
         </section>
         {tasks.length === 0 && (
           <motion.section
             layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.5 } }}
-            aria-label="todos"
             className="absolute left-0 right-0 m-auto -z-10 flex flex-col items-center max-w-xs mx-auto"
           >
             <img loading="lazy" src={beginnerImage} alt="" className="w-fit" />

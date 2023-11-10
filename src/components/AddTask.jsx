@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext } from "react";
 import TaskForm from "./TaskForm";
 import { motion } from "framer-motion";
+import { DataContext } from "../context/DataContext";
 const AddTask = () => {
-    const [showTaskForm, setShowTaskForm] = useState(false)
+  const { showTaskForm, setShowTaskForm} = useContext(DataContext)
     function openTaskFormHandler(){
         setShowTaskForm(true)
     }

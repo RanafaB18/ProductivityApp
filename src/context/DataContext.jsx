@@ -8,6 +8,8 @@ export const DataContextProvider = ({ children }) => {
     const [tasks, setTasks] = useState([])
     const [showSideBar, setShowSideBar] = useState(false)
     const [modalData, setModalData] = useState({ visible: false, task: {} });
+    const [showTaskForm, setShowTaskForm] = useState(false)
+
     useEffect(() => {
         async function fetchData() {
             return await getTasks()
@@ -24,6 +26,8 @@ export const DataContextProvider = ({ children }) => {
             tasks,
             showSideBar,
             modalData,
+            showTaskForm,
+            setShowTaskForm,
             setModalData,
             setShowSideBar,
             setTasks

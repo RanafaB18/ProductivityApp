@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { emailRegex } from "../../constants";
+import { signupHandler } from "../services/crud";
 
 export const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -13,23 +14,32 @@ export const SignUp = () => {
     email: false,
     confirmPassword: false,
   });
-  const passwordRef = useRef()
-  const emailRef = useRef()
-  
-  function submitHandler(event) {
+  const passwordRef = useRef();
+  const emailRef = useRef();
+
+  async function submitHandler(event) {
     event.preventDefault();
     console.log(formData);
     if (formData.confirmPassword !== formData.password) {
-        passwordRef.current.style.borderColor = 'red'
-        setError(prevState => ({...prevState, confirmPassword: true}))
-        return
+      passwordRef.current.style.borderColor = "red";
+      setError((prevState) => ({ ...prevState, confirmPassword: true }));
+      return;
     }
     if (!emailRegex.test(formData.email)) {
-        emailRef.current.style.borderColor ='red'
-        setError(prevState => ({...prevState, email: true}))
-        return
+      emailRef.current.style.borderColor = "red";
+      setError((prevState) => ({ ...prevState, email: true }));
+      return;
     }
-    setError({ email: true, confirmPassword: true})
+    setError({ email: false, confirmPassword: false });
+    // passwordRef.current.style.borderColor = 'blue'
+    // emailRef.current.style.borderColor ='blue'
+
+    const response = await signupHandler({
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+    });
+    console.log("Signup", response.data);
   }
 
   function updateFormHandler(event) {
@@ -78,7 +88,7 @@ export const SignUp = () => {
               id="password"
               value={formData.password}
               onChange={updateFormHandler}
-              placeholder="8+ characters"
+              placeholder="Password"
               name="password"
               required
             />
@@ -104,10 +114,10 @@ export const SignUp = () => {
             <p className="form-group">
               Already have an account? <Link to={"/login"}>Login</Link>
             </p>
-            <button className="btn" type="submit">
+            <Link  to={"/today"} className="btn" type="submit">
               {" "}
               sign Up
-            </button>
+            </Link>
           </div>
         </form>
       </div>

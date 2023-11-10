@@ -34,10 +34,31 @@ const updateTask = async (id, newTask) => {
     return response
 }
 
+const getWeeklyReport = async () => {
+    const response = await client.get('/weekly-report/', { headers })
+    return response
+}
+
+const signupHandler = async (formData) => {
+    const response = await client.post('/accounts/signup/', formData, { headers})
+    console.log(formData);
+    return response
+}
+
+const loginHandler = async (formData) => {
+    const response = await client.post('/accounts/login/', formData)
+    console.log(formData);
+    return response
+}
+
+
 export {
     getTasks,
     addTask,
     completeTask,
     deleteTask,
-    updateTask
+    updateTask,
+    getWeeklyReport,
+    signupHandler,
+    loginHandler
 }

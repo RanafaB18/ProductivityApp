@@ -6,16 +6,17 @@ import Login from './views/Login'
 import { SignUp } from './views/SignUp'
 import { DataContextProvider } from "./context/DataContext";
 import Resetpassword from './views/ResetPassword'
+import Report from './components/Report'
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />
+    element: <SignUp />
   },
   {
-    path: '/signup',
-    element: <SignUp/>
+    path: '/today',
+    element: <App/>,
   },
   {
     path: '/login',
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
     path: '/reset-password',
     element: <Resetpassword />
   },
+  {
+    path: '/performance',
+    element: <Report />
+  }
 
 ])
 ReactDOM.createRoot(document.getElementById("root")).render(

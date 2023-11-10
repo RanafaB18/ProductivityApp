@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Menu from "./Menu";
 import { useContext } from "react";
 import { DataContext } from "../context/DataContext";
+import { Link } from "react-router-dom";
 const variant = {
   hidden: {
     x: "-100%",
@@ -25,7 +26,7 @@ const SideBar = () => {
       variants={variant}
       initial="hidden"
       animate={showSideBar ? "visible" : "hidden"}
-      className="absolute top-0 left-0 z-20 p-5 h-screen w-4/6 bg-[#fcf9f9]"
+      className="absolute top-0 left-0 z-20 p-5 h-screen w-4/6 md:w-56 lg:w-96 bg-[#fcf9f9]"
     >
       <div className="flex items-center justify-between mb-5">
         <p>Ranafa</p>
@@ -49,7 +50,7 @@ const SideBar = () => {
           </svg>
           <p className="group-hover:opacity-100 opacity-60">Add task</p>
         </button>
-        <p>Performance</p>
+        <Link to={"/performance"}>Performance</Link>
       </div>
     </motion.aside>
   );
