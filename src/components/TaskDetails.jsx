@@ -79,7 +79,7 @@ const TaskDetails = ({ task }) => {
       initial={"hidden"}
       animate={"visible"}
       exit={"exit"}
-      className="absolute bottom-0 left-0 h-96 w-screen rounded-t-3xl bg-white flex flex-col "
+      className="absolute bottom-0 left-0 h-96 w-screen rounded-t-3xl bg-white flex flex-col md:max-w-lg"
     >
       <div className="flex items-center justify-end p-2 px-5">
         <button
