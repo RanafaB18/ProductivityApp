@@ -19,6 +19,8 @@ export const DataContextProvider = ({ children }) => {
             console.log("Response", res);
             console.log(res.data)
             setTasks(res.data.sort((a, b) => (b.priority - a.priority)))
+        }).catch(() => {
+            console.log("Will happen");
         })
     }, [])
     return (

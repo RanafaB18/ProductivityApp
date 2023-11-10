@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { emailRegex } from "../../constants";
 import { signupHandler } from "../services/crud";
 
@@ -16,6 +16,7 @@ export const SignUp = () => {
   });
   const passwordRef = useRef();
   const emailRef = useRef();
+  const navigate = useNavigate()
 
   async function submitHandler(event) {
     event.preventDefault();
@@ -39,7 +40,10 @@ export const SignUp = () => {
       email: formData.email,
       password: formData.password,
     });
-    console.log("Signup", response.data);
+    console.log("Signup", response);
+    if (response.status === 201) {
+      navigate('/login')
+    }
   }
 
   function updateFormHandler(event) {
@@ -114,10 +118,10 @@ export const SignUp = () => {
             <p className="form-group">
               Already have an account? <Link to={"/login"}>Login</Link>
             </p>
-            <Link  to={"/today"} className="btn" type="submit">
+            <button  to={"/today"} className="btn" type="submit">
               {" "}
               sign Up
-            </Link>
+            </button>
           </div>
         </form>
       </div>

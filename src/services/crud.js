@@ -2,7 +2,7 @@ import axios from "axios"
 
 const baseURL = "https://claraborlu.pythonanywhere.com/"
 // const baseURL = "http://127.0.0.1:8000/"
-const client = axios.create({baseURL})
+export const client = axios.create({baseURL})
 const headers = {
     'Authorization': 'Token 33720c550cfcf01d2f247d2137b284c511810045',
 }

@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { client } from "../services/crud";
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
-
+  const navigate = useNavigate()
   const [error, setError] = useState("");
-
   function updateFormHandler(event) {
     setFormData({
       ...formData,
@@ -22,17 +22,21 @@ const Login = () => {
         .post(
           "https://claraborlu.pythonanywhere.com/accounts/login/",
           { username: formData.username, password: formData.password },
-          {
-            headers: {
-              Authorization: "Token 3739b90244d5f0a192bdb2c8209f7a6c27127fe8",
-              // 'Content-Type': 'application/json',
-              // 'Accept': 'application/json'
-            },
-          }
+          // {
+          //   headers: {
+          //     Authorization: "Token 3739b90244d5f0a192bdb2c8209f7a6c27127fe8",
+          //     // 'Content-Type': 'application/json',
+          //     // 'Accept': 'application/json'
+          //   },
+          // }
+
         )
         .then((response) => {
           if (response.status == 200) {
-            console.log("use authentication");
+            navigate("/today")
+            client.defaults.headers.common['Authorization'] = `Token ${response.data.token}`
+            localStorage.setItem('token', response.data.token)
+            console.log("Client", client.defaults.headers.common['Authorization'], response);
           } else {
             console.log("user not authenticated");
           }
