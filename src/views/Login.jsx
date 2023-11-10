@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { client } from "../services/crud";
 
 const Login = () => {
@@ -83,10 +83,6 @@ const Login = () => {
           {error && <span>{error}</span>}
 
           <div className="login-group">
-            <p className="form-group">
-              Forgotten Your Password?{" "}
-              <Link to="/reset-password">Reset Password</Link>
-            </p>
             <button className="btn" type="submit">
               Login
             </button>
