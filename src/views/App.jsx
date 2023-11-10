@@ -48,7 +48,7 @@ const App = () => {
         modalData.visible || showSideBar
           ? "backdrop-saturate-50 bg-black/30 h-screen w-screen"
           : "bg-white"
-      }`}
+      } ${showSideBar && "lg:bg-white"}`}
     >
       <div ref={menuRef} className="absolute">
         <Menu />
