@@ -9,8 +9,10 @@ export const DataContextProvider = ({ children }) => {
     const [showSideBar, setShowSideBar] = useState(false)
     const [modalData, setModalData] = useState({ visible: false, task: {} });
     const [showTaskForm, setShowTaskForm] = useState(false)
+    const [rerun, setRerun] = useState(false)
 
     useEffect(() => {
+        console.log("Effect run");
         async function fetchData() {
             return await getTasks()
         }
@@ -22,13 +24,15 @@ export const DataContextProvider = ({ children }) => {
         }).catch(() => {
             console.log("Will happen");
         })
-    }, [])
+    }, [rerun, setRerun])
     return (
         <DataContext.Provider value={{
             tasks,
             showSideBar,
             modalData,
             showTaskForm,
+            rerun,
+            setRerun,
             setShowTaskForm,
             setModalData,
             setShowSideBar,

@@ -8,10 +8,9 @@ import { DataContext } from "../context/DataContext";
 import { motion } from "framer-motion";
 import { addTask, updateTask } from "../services/crud";
 const TaskForm = ({ onCloseForm, todo }) => {
-  const { setTasks } = useContext(DataContext);
+  const { setTasks, setRerun } = useContext(DataContext);
   const [task, setTask] = useState(
     todo ?? {
-      id: "",
       name: "",
       description: "",
       subtasks: [],
@@ -46,12 +45,13 @@ const TaskForm = ({ onCloseForm, todo }) => {
       console.log("Edited", response);
     } else {
       // creating new task
+      console.log("Created task", task);
       setTasks((prevTasks) => {
-        return [...prevTasks, task];
+        return [...prevTasks, {...task}];
       });
       onCloseForm()
-      const response = await addTask(task)
-      console.log("Adding tasks", response.data);
+      await addTask(task)
+      setRerun(prevState => (!prevState))
     }
   }
   return (
