@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import { motion } from "framer-motion";
 import { addTask, updateTask } from "../services/crud";
+import { v4 as uuid } from "uuid"
 const TaskForm = ({ onCloseForm, todo }) => {
   const { setTasks, setRerun } = useContext(DataContext);
   const [task, setTask] = useState(
@@ -15,6 +16,7 @@ const TaskForm = ({ onCloseForm, todo }) => {
       description: "",
       subtasks: [],
       priority: "P4",
+      key: ""
     }
   );
   function formUpdateHandler(event) {
@@ -45,9 +47,10 @@ const TaskForm = ({ onCloseForm, todo }) => {
       console.log("Edited", response);
     } else {
       // creating new task
-      console.log("Created task", task);
       setTasks((prevTasks) => {
-        return [...prevTasks, {...task}];
+        const createdTask = {...task, key: uuid()}
+        console.log("Created task", createdTask);
+        return [...prevTasks, createdTask];
       });
       onCloseForm()
       await addTask(task)

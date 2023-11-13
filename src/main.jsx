@@ -6,7 +6,7 @@ import Login from './views/Login'
 import { SignUp } from './views/SignUp'
 import { DataContextProvider } from "./context/DataContext";
 import Resetpassword from './views/ResetPassword'
-import Report from './components/Report'
+import Report from './views/Report'
 
 
 const router = createBrowserRouter([
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/today',
-    element: <App/>,
+    element: <DataContextProvider><App /></DataContextProvider>,
   },
   {
     path: '/login',
@@ -33,7 +33,5 @@ const router = createBrowserRouter([
 
 ])
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <DataContextProvider>
     <RouterProvider router={router} />
-  </DataContextProvider>
 );

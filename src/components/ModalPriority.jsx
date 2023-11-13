@@ -38,31 +38,7 @@ const ModalPriority = ({ setTask, taskPriority }) => {
     }));
     setCurrentPriority(choice)
   }
-  // const customStyles = {
-  //   control: () => ({
-  //     display: "flex",
-  //     border: "1px solid #ececec",
-  //     borderRadius: "5px",
-  //     "&:hover": {
-  //       backgroundColor: "#e3e1e1",
-  //     },
-  //   }),
-  //   menu: (styles) => ({
-  //     ...styles,
-  //     width: "150px",
-  //   }),
-  //   valueContainer: (styles) => ({
-  //     ...styles,
-  //     paddingInline: "3px",
-  //   }),
-  //   clearIndicator: (styles) => ({
-  //     ...styles,
-  //     padding: 0,
-  //     marginRight: "3px",
-  //     width: "15px",
-  //     color: "#797979",
-  //   }),
-  // };
+
   return (
     <Select
       className="w-5/6 mx-auto cursor-pointer"

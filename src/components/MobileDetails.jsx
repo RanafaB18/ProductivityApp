@@ -2,22 +2,33 @@ import { motion } from "framer-motion";
 import Proptypes from "prop-types";
 import CancelIcon from "./CancelIcon";
 import { priorityToColorMapping, priorityToHexMapping } from "../../constants";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import ModalPriority from "./ModalPriority";
 import { DataContext } from "../context/DataContext";
 import sound from "../assets/water-droplet.mp3";
-import { completeTask, updateTask } from "../services/crud";
+import { updateTask } from "../services/crud";
 
-const TaskDetails = ({ task }) => {
+const variant = {
+  hidden: { height: 0 },
+  visible: {
+    height: 360,
+    transition: {
+      duration: 0.3,
+    },
+  },
+  exit: {
+    translateY: 100,
+    opacity: 0,
+    transition: { duration: 0.3 },
+  },
+};
+
+const MobileDetails = ({ task }) => {
   const [editTask, setEditTask] = useState(task);
-  const { setTasks, setModalData, setShowTaskForm } = useContext(DataContext);
+  const { setTasks, setModalData } = useContext(DataContext);
 
   console.log("Clicked Task", task);
   console.log("Editing task", editTask);
-
-  useEffect(() => {
-    setShowTaskForm(false);
-  }, [setShowTaskForm]);
 
   function editFormHandler(event) {
     const { name, value } = event.target;
@@ -29,7 +40,7 @@ const TaskDetails = ({ task }) => {
     });
   }
 
-  async function completeAndRemoveHandler(event) {
+  function completeAndRemoveHandler(event) {
     event.stopPropagation();
     const audio = new Audio(sound);
     audio.play();
@@ -42,8 +53,6 @@ const TaskDetails = ({ task }) => {
       ...prevData,
       visible: false,
     }));
-    const response = await completeTask(task.id);
-    console.log("Complete", response);
   }
 
   function cancelEditHandler() {
@@ -68,10 +77,16 @@ const TaskDetails = ({ task }) => {
 
   async function saveFormHandler() {
     closeModalHandler();
-    await updateTask(task.id, editTask);
+    await updateTask(task.id, task);
   }
   return (
-    <section className="absolute inset-0 m-auto h-fit bg-white rounded-lg hidden pb-6 md:flex flex-col md:max-w-lg lg:max-w-3xl mx-auto">
+    <motion.section
+      variants={variant}
+      initial={"hidden"}
+      animate={"visible"}
+      exit={"exit"}
+      className="absolute bottom-0 left-0 h-96 w-screen rounded-t-3xl bg-white flex flex-col "
+    >
       <div className="flex items-center justify-end p-2 px-5">
         <button
           type="button"
@@ -84,6 +99,7 @@ const TaskDetails = ({ task }) => {
       <motion.article
         layout
         className="flex justify-evenly cursor-pointer items-start py-3 min-h-[80px] group"
+        //   onClick={openDetailsHandler}
       >
         <motion.button
           whileTap={{
@@ -110,10 +126,7 @@ const TaskDetails = ({ task }) => {
             />
           </svg>
         </motion.button>
-        <form
-          onSubmit={saveFormHandler}
-          className="focus-within:border-2 rounded-lg p-3 w-full flex flex-col gap-4 max-w-sm"
-        >
+        <form className="focus-within:border-2 rounded-lg p-3 w-fit flex flex-col gap-4 max-w-sm">
           <input
             type="text"
             className="peer outline-none text-xl font-semibold overflow-hidden whitespace-nowrap text-ellipsis"
@@ -132,10 +145,7 @@ const TaskDetails = ({ task }) => {
         </form>
       </motion.article>
       <ModalPriority setTask={setEditTask} taskPriority={editTask.priority} />
-      <div
-        onClick={saveFormHandler}
-        className="flex justify-end gap-2 pr-5 pt-4"
-      >
+      <div className="flex flex-col justify-end gap-2 p-3">
         <button
           type="button"
           onClick={cancelEditHandler}
@@ -145,6 +155,7 @@ const TaskDetails = ({ task }) => {
         </button>
         <button
           type="button"
+          onClick={saveFormHandler}
           disabled={!editTask.name}
           className={`${
             !editTask.name && "cursor-no-drop opacity-60"
@@ -153,11 +164,12 @@ const TaskDetails = ({ task }) => {
           Save
         </button>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
-TaskDetails.propTypes = {
+MobileDetails.propTypes = {
   task: Proptypes.object,
 };
-export default TaskDetails;
+
+export default MobileDetails;

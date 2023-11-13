@@ -1,11 +1,10 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { client } from "../services/crud";
+import { client, loginHandler } from "../services/crud";
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   function updateFormHandler(event) {
     setFormData({
@@ -14,36 +13,26 @@ const Login = () => {
     });
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.username && formData.password) {
-      axios
-        .post(
-          "https://claraborlu.pythonanywhere.com/accounts/login/",
-          { username: formData.username, password: formData.password },
-          // {
-          //   headers: {
-          //     Authorization: "Token 3739b90244d5f0a192bdb2c8209f7a6c27127fe8",
-          //     // 'Content-Type': 'application/json',
-          //     // 'Accept': 'application/json'
-          //   },
-          // }
-
-        )
-        .then((response) => {
-          if (response.status == 200) {
-            navigate("/today")
-            client.defaults.headers.common['Authorization'] = `Token ${response.data.token}`
-            localStorage.setItem('token', response.data.token)
-            console.log("Client", client.defaults.headers.common['Authorization'], response);
-          } else {
-            console.log("user not authenticated");
-          }
-        })
-        .catch(() => {
-          console.log("Failure");
-        });
+      const response = await loginHandler({
+        username: formData.username,
+        password: formData.password,
+      });
+      console.log("Response", response);
+      if (response.status === 200) {
+        navigate("/today");
+        const accessToken = response.data.token
+        console.log("Access token in resp", accessToken);
+        client.defaults.headers.common[
+          "Authorization"
+        ] = accessToken ? `Token ${accessToken}` : null;
+        localStorage.setItem('user-token', JSON.stringify(response.data.token))
+      } else {
+        setError("User is not authenticated");
+      }
     } else {
       setError(e.target.value);
     }

@@ -8,6 +8,7 @@ import TaskItem from "../components/TaskItem";
 import { AnimatePresence, motion } from "framer-motion";
 import TaskDetails from "../components/TaskDetails";
 import SideBar from "../components/SideBar";
+import MobileDetails from "../components/MobileDetails";
 const App = () => {
   const {
     tasks,
@@ -58,12 +59,16 @@ const App = () => {
       </div>
       <section className="p-8">
         <section
-          className={`flex flex-col divide-y md:max-w-lg lg:max-w-3xl ${showSideBar ? "lg:pl-32" : ""} mx-auto`}
+          className={`flex flex-col divide-y md:max-w-lg lg:max-w-3xl ${
+            showSideBar ? "lg:pl-32" : ""
+          } mx-auto`}
         >
           <Header />
           {tasks.length !== 0 &&
             tasks.map((task) => {
-              return <TaskItem key={task.id} task={task} />;
+              return (
+                <TaskItem key={task.key ? task.key : task.id} task={task} />
+              );
             })}
           <div ref={addTaskRef}>
             <AddTask />
@@ -90,7 +95,12 @@ const App = () => {
       <AnimatePresence>
         {modalData.visible && (
           <div ref={taskDetailRef} className="">
-            <TaskDetails task={modalData.task} />
+            <div className="md:hidden">
+              <MobileDetails task={modalData.task} />
+            </div>
+            <div className="md:block">
+              <TaskDetails task={modalData.task}/>
+            </div>
           </div>
         )}
       </AnimatePresence>
