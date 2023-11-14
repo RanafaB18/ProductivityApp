@@ -29,7 +29,12 @@ const SideBar = () => {
       className="absolute top-0 left-0 z-20 p-5 h-screen w-4/6 md:w-56 lg:w-96 bg-[#fcf9f9]"
     >
       <div className="flex items-center justify-between mb-5">
-        <p className="text-gray-400 text-sm">Track your productivity</p>
+        <div className="flex flex-col">
+          <span className="font-semibold capitalize text-gray-600">
+            {JSON.parse(localStorage.getItem("todo-username"))}
+          </span>
+          <p className="text-gray-400 text-sm">Track your productivity </p>
+        </div>
         <Menu />
       </div>
       <div className="flex flex-col gap-3">

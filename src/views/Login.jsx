@@ -30,6 +30,7 @@ const Login = () => {
           "Authorization"
         ] = accessToken ? `Token ${accessToken}` : null;
         localStorage.setItem('user-token', JSON.stringify(response.data.token))
+        localStorage.setItem('todo-username', JSON.stringify(formData.username))
       } else {
         setError("User is not authenticated");
       }
