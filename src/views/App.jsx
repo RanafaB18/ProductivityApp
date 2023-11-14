@@ -13,7 +13,7 @@ const App = () => {
   const {
     tasks,
     setShowSideBar,
-    setShowTaskForm,
+    // setShowTaskForm,
     setModalData,
     showSideBar,
     modalData,
@@ -32,9 +32,10 @@ const App = () => {
     if (!taskDetailRef.current?.contains(e.target)) {
       setModalData((prevState) => ({ ...prevState, visible: false }));
     }
-    if (!addTaskRef.current?.contains(e.target)) {
-      setShowTaskForm(false);
-    }
+    // Causes bug that prevents priority from being selected.
+    // if (!addTaskRef.current?.contains(e.target)) {
+    //   setShowTaskForm(false);
+    // }
   }
 
   useEffect(() => {
