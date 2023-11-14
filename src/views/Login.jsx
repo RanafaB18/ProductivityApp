@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { client, loginHandler } from "../services/crud";
 
 const Login = () => {
@@ -71,6 +71,9 @@ const Login = () => {
           </div>
 
           {error && <span>{error}</span>}
+          <div className="login-group">
+            <p>Don&apos;t have an account? <Link to={'/'} className="text-[#fa8232]">Sign Up</Link> </p>
+          </div>
 
           <div className="login-group">
             <button className="btn" type="submit">
