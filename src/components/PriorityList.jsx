@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import Select, { components } from "react-select";
 import flag4 from "../assets/flag4.svg";
+import flag3 from "../assets/flag3.svg";
+import flag2 from "../assets/flag2.svg";
+import flag1 from "../assets/flag1.svg";
 import { useState } from "react";
 const { Option } = components;
 const IconOption = (props) => (
@@ -22,9 +25,9 @@ const SingleValue = ({ ...props }) => (
 );
 
 const options = [
-  { value: "P1", label: "Priority 1", icon: "../src/assets/flag1.svg" },
-  { value: "P2", label: "Priority 2", icon: "src/assets/flag2.svg" },
-  { value: "P3", label: "Priority 3", icon: "src/assets/flag3.svg" },
+  { value: "P1", label: "Priority 1", icon: flag1 },
+  { value: "P2", label: "Priority 2", icon: flag2 },
+  { value: "P3", label: "Priority 3", icon: flag3 },
   { value: "P4", label: "Priority 4", icon: flag4 },
 ];
 const PriorityList = ({ setTask, taskPriority }) => {
