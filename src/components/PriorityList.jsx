@@ -25,7 +25,7 @@ const options = [
   { value: "P1", label: "Priority 1", icon: "../src/assets/flag1.svg" },
   { value: "P2", label: "Priority 2", icon: "src/assets/flag2.svg" },
   { value: "P3", label: "Priority 3", icon: "src/assets/flag3.svg" },
-  { value: "P4", label: "Priority 4", icon: "src/assets/flag4.svg" },
+  { value: "P4", label: "Priority 4", icon: flag4 },
 ];
 const PriorityList = ({ setTask, taskPriority }) => {
   const [currentPriority, setCurrentPriority] = useState(
