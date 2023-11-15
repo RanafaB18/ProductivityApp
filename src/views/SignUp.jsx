@@ -1,8 +1,14 @@
 import { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { emailRegex } from "../../constants";
 import { signupHandler } from "../services/crud";
 
+export async function loader(){
+  if (localStorage.getItem('user-token')) {
+    console.log("llll", localStorage.getItem("user-token"));
+    return redirect('/today')
+  }
+}
 export const SignUp = () => {
   const [formData, setFormData] = useState({
     username: "",

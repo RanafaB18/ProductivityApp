@@ -3,7 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./views/App";
 import Login from "./views/Login";
-import { SignUp } from "./views/SignUp";
+import { SignUp, loader } from "./views/SignUp";
 import { DataContextProvider } from "./context/DataContext";
 import Resetpassword from "./views/ResetPassword";
 import Report from "./views/Report";
@@ -14,6 +14,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <SignUp />,
     errorElement: <NotFound />,
+    loader
   },
   {
     path: "/today",
