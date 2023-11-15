@@ -28,7 +28,6 @@ const TaskForm = ({ onCloseForm, todo }) => {
   }
   async function submitFormHandler(event) {
     event.preventDefault();
-    console.log("Form Data", task);
 
     if (todo) {
       // is editing a task
@@ -42,14 +41,11 @@ const TaskForm = ({ onCloseForm, todo }) => {
         })
       })
       onCloseForm()
-      console.log("Task", task);
-      const response = await updateTask(task.id, task)
-      console.log("Edited", response);
+      await updateTask(task.id, task)
     } else {
       // creating new task
       setTasks((prevTasks) => {
         const createdTask = {...task, key: uuid()}
-        console.log("Created task", createdTask);
         return [...prevTasks, createdTask];
       });
       onCloseForm()

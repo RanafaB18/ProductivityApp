@@ -1,7 +1,7 @@
 import { Line } from "react-chartjs-2";
 import Chart, { CategoryScale } from "chart.js/auto";
 import { useEffect, useState } from "react";
-import { client, getWeeklyReport } from "../services/crud";
+import { getWeeklyReport } from "../services/crud";
 import { useNavigate } from "react-router-dom";
 Chart.register(CategoryScale);
 const Report = () => {
@@ -20,10 +20,8 @@ const Report = () => {
     async function fetchWeeklyReport() {
       return await getWeeklyReport();
     }
-    console.log(client.defaults.headers['Authorization']);
     fetchWeeklyReport().then((res) => {
       const percentages = [];
-      console.log("Response", res.data.days);
       for (let i = 0; i < 7; i++) {
         percentages.push(res.data.days[daysArray[i]].completed_task_percentage);
       }

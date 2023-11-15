@@ -5,7 +5,6 @@ import { signupHandler } from "../services/crud";
 
 export async function loader(){
   if (localStorage.getItem('user-token')) {
-    console.log("llll", localStorage.getItem("user-token"));
     return redirect('/today')
   }
   return null
@@ -27,7 +26,6 @@ export const SignUp = () => {
 
   async function submitHandler(event) {
     event.preventDefault();
-    console.log(formData);
     if (formData.confirmPassword !== formData.password) {
       passwordRef.current.style.borderColor = "red";
       setError((prevState) => ({ ...prevState, confirmPassword: true }));
@@ -47,7 +45,6 @@ export const SignUp = () => {
       email: formData.email,
       password: formData.password,
     });
-    console.log("Signup", response);
     if (response.status === 201) {
       navigate('/login')
     }

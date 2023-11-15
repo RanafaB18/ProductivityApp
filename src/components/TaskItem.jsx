@@ -25,7 +25,6 @@ const priorityToHexMapping = {
 const TaskItem = ({ task }) => {
   const { setTasks, setModalData, setShowSideBar } = useContext(DataContext);
   const { name, description, priority, id } = task;
-  console.log("Priority", priority);
   const [isEditing, setIsEditing] = useState(false);
   async function completeAndRemoveHandler(event) {
     event.stopPropagation();
@@ -36,8 +35,7 @@ const TaskItem = ({ task }) => {
         return prevTasks.filter((task) => task.id !== id);
       });
     }, 150);
-    const response = await completeTask(id);
-    console.log("Complete", response);
+    await completeTask(id);
   }
 
   function openDetailsHandler(event) {
@@ -55,8 +53,7 @@ const TaskItem = ({ task }) => {
     setTasks((prevTasks) => {
       return prevTasks.filter((task) => task.id !== id);
     });
-    const response = await deleteTask(id)
-    console.log("Deleted", response);
+    await deleteTask(id)
   }
   function closeFormHandler() {
     setIsEditing(false);

@@ -21,11 +21,9 @@ const Login = () => {
         username: formData.username,
         password: formData.password,
       });
-      console.log("Response", response);
       if (response.status === 200) {
         navigate("/today");
         const accessToken = response.data.token
-        console.log("Access token in resp", accessToken);
         client.defaults.headers.common[
           "Authorization"
         ] = accessToken ? `Token ${accessToken}` : null;

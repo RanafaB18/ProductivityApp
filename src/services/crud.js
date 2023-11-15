@@ -11,7 +11,6 @@ export const client = axios.create({ baseURL, headers: {
 
 
 const getTasks = async () => {
-    console.log("Access in get", client.defaults.headers['Authorization'], localStorage.getItem('user-token'));
     const accessToken = JSON.parse(localStorage.getItem('user-token'))
     return await client.get(`/`, {
         headers: {
@@ -68,13 +67,11 @@ const getWeeklyReport = async () => {
 
 const signupHandler = async (formData) => {
     const response = await client.post('/accounts/signup/', formData)
-    console.log(formData);
     return response
 }
 
 const loginHandler = async (formData) => {
     const response = await client.post('/accounts/login/', formData)
-    console.log(formData);
     return response
 }
 

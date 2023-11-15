@@ -12,17 +12,14 @@ export const DataContextProvider = ({ children }) => {
     const [rerun, setRerun] = useState(false)
 
     useEffect(() => {
-        console.log("Effect run");
         async function fetchData() {
             return await getTasks()
         }
 
         fetchData().then((res) => {
-            console.log("Response", res);
-            console.log(res.data)
             setTasks(res.data.sort((a, b) => (b.priority - a.priority)))
-        }).catch(() => {
-            console.log("Will happen");
+        }).catch((e) => {
+            console.log("Error: ", e);
         })
     }, [rerun, setRerun])
     return (

@@ -12,9 +12,6 @@ const TaskDetails = ({ task }) => {
   const [editTask, setEditTask] = useState(task);
   const { setTasks, setModalData, setShowTaskForm } = useContext(DataContext);
 
-  console.log("Clicked Task", task);
-  console.log("Editing task", editTask);
-
   useEffect(() => {
     setShowTaskForm(false);
   }, [setShowTaskForm]);
@@ -42,8 +39,7 @@ const TaskDetails = ({ task }) => {
       ...prevData,
       visible: false,
     }));
-    const response = await completeTask(task.id);
-    console.log("Complete", response);
+    await completeTask(task.id);
   }
 
   function cancelEditHandler() {

@@ -27,9 +27,6 @@ const MobileDetails = ({ task }) => {
   const [editTask, setEditTask] = useState(task);
   const { setTasks, setModalData } = useContext(DataContext);
 
-  console.log("Clicked Task", task);
-  console.log("Editing task", editTask);
-
   function editFormHandler(event) {
     const { name, value } = event.target;
     setEditTask((prevData) => {
