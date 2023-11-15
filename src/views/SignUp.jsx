@@ -8,6 +8,7 @@ export async function loader(){
     console.log("llll", localStorage.getItem("user-token"));
     return redirect('/today')
   }
+  return null
 }
 export const SignUp = () => {
   const [formData, setFormData] = useState({

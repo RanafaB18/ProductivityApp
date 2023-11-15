@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Menu from "./Menu";
 import { useContext } from "react";
 import { DataContext } from "../context/DataContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const variant = {
   hidden: {
     x: "-100%",
@@ -21,6 +21,11 @@ const variant = {
 };
 const SideBar = () => {
   const { showSideBar } = useContext(DataContext);
+  const navigate = useNavigate()
+  function logoutHandler() {
+    localStorage.clear()
+    navigate('/', { replace: true })
+  }
   return (
     <motion.aside
       variants={variant}
@@ -40,6 +45,7 @@ const SideBar = () => {
       <div className="flex flex-col gap-3">
         <Link to={"/performance"}>Performance</Link>
       </div>
+      <button onClick={logoutHandler} className="absolute bottom-10 right-6 text-gray-400">Logout</button>
     </motion.aside>
   );
 };
