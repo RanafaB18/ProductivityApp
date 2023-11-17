@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Menu from "./Menu";
 import { useContext } from "react";
 import { DataContext } from "../context/DataContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const variant = {
   hidden: {
     x: "-100%",
@@ -21,10 +21,9 @@ const variant = {
 };
 const SideBar = () => {
   const { showSideBar } = useContext(DataContext);
-  const navigate = useNavigate()
   function logoutHandler() {
     localStorage.clear()
-    navigate('/', { replace: true })
+    window.location.href = '/'
   }
   return (
     <motion.aside
